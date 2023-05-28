@@ -80,7 +80,7 @@ function run() {
                     proc();
                 });
             })));
-            core.setOutput('upload success\n', files.join('\n'));
+            core.setOutput('upload success', files.join('\n'));
         }
         catch (error) {
             if (error instanceof Error)
