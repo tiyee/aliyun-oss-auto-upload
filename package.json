@@ -27,6 +27,7 @@
   "dependencies": {
     "@actions/core": "^1.10.0",
     "glob":"latest",
+    "dotenv": "latest",
     "ali-oss": "latest"
   },
   "devDependencies": {
@@ -41,6 +42,7 @@
     "js-yaml": "^4.1.0",
     "prettier": "^2.8.8",
     "ts-jest": "^29.1.0",
+    "@types/jest": "latest",
     "typescript": "^5.0.4"
   }
 }
