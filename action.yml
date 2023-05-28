@@ -20,7 +20,7 @@ inputs:
     default: 'true'
   local-folder:
     required: true
-    description: entry
+    description: local-folder
     default: dist
   remote-dir:
     required: true

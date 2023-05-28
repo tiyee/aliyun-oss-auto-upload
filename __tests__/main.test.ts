@@ -1,4 +1,3 @@
-//
 import * as process from 'process'
 import * as cp from 'child_process'
 import * as path from 'path'
@@ -11,8 +10,7 @@ test('test runs', () => {
   process.env['INPUT_ACCESS-KEY-SECRET'] = process.env.ACCESS_KEY_SECRET
   process.env['INPUT_BUCKET'] = process.env.BUCKET
   process.env['INPUT_SECURE'] = process.env.SECURE
-  process.env['INPUT_ENTRY'] = 'dist/**/*'
-  process.env['INPUT_REMOTE-DIR'] = '/'
+  process.env['LOCAL-FOLDER'] = 'dist'
   const ip = path.join(__dirname, '..', 'lib', 'main.js')
   const options: cp.ExecSyncOptions = {
     env: process.env
