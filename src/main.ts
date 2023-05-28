@@ -41,7 +41,7 @@ async function run(): Promise<void> {
         }
       )
     )
-    core.setOutput('upload success\n', files.join('\n'))
+    core.setOutput('upload success', files.join('\n'))
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
   }
