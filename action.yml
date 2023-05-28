@@ -27,7 +27,7 @@ inputs:
     description: remote-dir
     default: /
 runs:
-  using: node18
+  using: node16
   main: dist/index.js
 branding:
   icon: upload-cloud  
