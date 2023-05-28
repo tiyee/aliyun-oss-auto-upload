@@ -18,10 +18,10 @@ inputs:
     required: true
     description: access secret
     default: 'true'
-  entry:
+  local-folder:
     required: true
     description: entry
-    default: dist/**/*
+    default: dist
   remote-dir:
     required: true
     description: remote-dir

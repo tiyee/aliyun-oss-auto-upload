@@ -45,6 +45,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(67733));
 const ali_oss_1 = __importDefault(__nccwpck_require__(35257));
 const glob_1 = __nccwpck_require__(53552);
+const path_1 = __importDefault(__nccwpck_require__(71017));
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -54,7 +55,7 @@ function run() {
             const BUCKET = core.getInput('bucket');
             const SECURE = core.getInput('secure');
             //
-            const ENTRY = core.getInput('entry');
+            const LOCAL_FOLDER = core.getInput('local-folder');
             const REMOTE_DIR = core.getInput('remote-dir');
             const client = new ali_oss_1.default({
                 region: REGION,
@@ -63,8 +64,18 @@ function run() {
                 secure: /^\s*(true|1)\s*$/i.test(SECURE),
                 bucket: BUCKET
             });
+            let folder = LOCAL_FOLDER;
+            while (folder.startsWith('/')) {
+                folder = folder.slice(1);
+            }
+            while (folder.endsWith('/')) {
+                folder = folder.slice(0, folder.length - 1);
+            }
+            if (folder.length === 0) {
+                core.setFailed('folder is empty');
+            }
             const maxConcurrency = 10;
-            const files = glob_1.glob.sync(ENTRY, { nodir: true });
+            const files = glob_1.glob.sync(`${folder}/**/*`, { nodir: true });
             Promise.all(Array.from({ length: maxConcurrency }, (_, index) => __awaiter(this, void 0, void 0, function* () {
                 return new Promise(resolve => {
                     const proc = () => {
@@ -74,7 +85,7 @@ function run() {
                             return;
                         }
                         if (file) {
-                            client.put(REMOTE_DIR + file, file);
+                            client.put(REMOTE_DIR + path_1.default.relative(folder, file), file);
                         }
                     };
                     proc();

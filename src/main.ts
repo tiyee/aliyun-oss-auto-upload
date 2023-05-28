@@ -1,6 +1,7 @@
 import * as core from '@actions/core'
 import AliyunOSS from 'ali-oss'
 import {glob} from 'glob'
+import path from 'path'
 
 async function run(): Promise<void> {
   try {
@@ -10,7 +11,7 @@ async function run(): Promise<void> {
     const BUCKET = core.getInput('bucket')
     const SECURE = core.getInput('secure')
     //
-    const ENTRY = core.getInput('entry')
+    const LOCAL_FOLDER = core.getInput('local-folder')
     const REMOTE_DIR: string = core.getInput('remote-dir')
     const client = new AliyunOSS({
       region: REGION,
@@ -19,8 +20,18 @@ async function run(): Promise<void> {
       secure: /^\s*(true|1)\s*$/i.test(SECURE),
       bucket: BUCKET
     })
+    let folder = LOCAL_FOLDER
+    while (folder.startsWith('/')) {
+      folder = folder.slice(1)
+    }
+    while (folder.endsWith('/')) {
+      folder = folder.slice(0, folder.length - 1)
+    }
+    if (folder.length === 0) {
+      core.setFailed('folder is empty')
+    }
     const maxConcurrency = 10
-    const files: string[] = glob.sync(ENTRY, {nodir: true})
+    const files: string[] = glob.sync(`${folder}/**/*`, {nodir: true})
     Promise.all(
       Array.from(
         {length: maxConcurrency},
@@ -33,7 +44,7 @@ async function run(): Promise<void> {
                 return
               }
               if (file) {
-                client.put(REMOTE_DIR + file, file)
+                client.put(REMOTE_DIR + path.relative(folder, file), file)
               }
             }
             proc()
