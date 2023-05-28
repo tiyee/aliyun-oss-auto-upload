@@ -64,7 +64,7 @@ function run() {
                 bucket: BUCKET
             });
             const maxConcurrency = 10;
-            const files = glob_1.glob.sync(ENTRY);
+            const files = glob_1.glob.sync(ENTRY, { nodir: true });
             Promise.all(Array.from({ length: maxConcurrency }, (_, index) => __awaiter(this, void 0, void 0, function* () {
                 return new Promise(resolve => {
                     const proc = () => {

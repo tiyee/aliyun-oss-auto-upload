@@ -20,7 +20,7 @@ async function run(): Promise<void> {
       bucket: BUCKET
     })
     const maxConcurrency = 10
-    const files: string[] = glob.sync(ENTRY)
+    const files: string[] = glob.sync(ENTRY, {nodir: true})
     Promise.all(
       Array.from(
         {length: maxConcurrency},
