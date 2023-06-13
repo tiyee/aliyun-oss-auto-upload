@@ -44,6 +44,6 @@
     "ts-jest": "^29.1.0",
     "@types/glob":"latest",
     "@types/jest": "latest",
-    "typescript": "^5.0.4"
+    "typescript": "^5.1.3"
   }
 }
