@@ -98,3 +98,4 @@ Thumbs.db
 __tests__/runner/*
 lib/**/*
 package-lock.json
+pnpm-lock.yaml
