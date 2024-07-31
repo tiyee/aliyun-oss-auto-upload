@@ -61,7 +61,7 @@ jobs:
         run: npm install && npm run build
 
       - name: Deploy OSS
-        uses: tiyee/aliyun-oss-auto-upload@v2.0.0
+        uses: tiyee/aliyun-oss-auto-upload@latest
         with:
           # aliyun config
           region: oss-cn-beijing
