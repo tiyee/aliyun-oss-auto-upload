@@ -46,6 +46,7 @@ async function run(): Promise<void> {
               if (file) {
                 client.put(REMOTE_DIR + path.relative(folder, file), file)
               }
+              proc()
             }
             proc()
           })
